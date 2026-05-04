@@ -17,8 +17,8 @@ const offers = [
 </script>
 
 <template>
-  <section class="bg-white px-16 py-10">
-    <h2 class="mb-10 text-3xl font-extrabold text-gray-950">
+  <section class="bg-white px-16 py-10 dark:bg-gray-950">
+    <h2 class="mb-10 text-3xl font-extrabold text-gray-950 dark:text-white">
       TODAY OFFERS
     </h2>
 
@@ -36,7 +36,7 @@ const offers = [
 
         <div class="absolute inset-0 bg-black/45"></div>
 
-        <div class="absolute left-12 top-0 rounded-b-xl bg-white px-10 py-5 text-sm font-extrabold text-gray-950">
+        <div class="absolute left-12 top-0 rounded-b-xl bg-white px-10 py-5 text-sm font-extrabold text-gray-950 dark:bg-gray-900 dark:text-white">
           {{ offer.tag }}
         </div>
 

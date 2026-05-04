@@ -1,0 +1,146 @@
+{
+  "sections": [
+    {
+      "id": "credit-card-offers",
+      "title": "Credit Card Offers",
+      "items": [
+        {
+          "id": 1,
+          "title": "Citibank Mega Feast - 50% Off",
+          "description": "Use selected Citi cards and enjoy up to 50% off on special combo deals.",
+          "badge": "50% OFF | Weekend Offer",
+          "imageUrl": "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=240&q=80"
+        }
+      ]
+    },
+    {
+      "id": "weekend-vibes",
+      "title": "Weekend Vibes",
+      "items": [
+        {
+          "id": 2,
+          "title": "Buy 2 Pizzas & Get 1 Free",
+          "description": "Enjoy more pizza with friends and family this weekend.",
+          "badge": "Family Combo",
+          "imageUrl": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=240&q=80"
+        },
+        {
+          "id": 3,
+          "title": "Rs.1000 OFF On Large Pizza",
+          "description": "Apply code LARGE1000 for instant discount at checkout.",
+          "badge": "Save More",
+          "imageUrl": "https://images.unsplash.com/photo-1593504049359-74330189a345?auto=format&fit=crop&w=240&q=80"
+        },
+        {
+          "id": 4,
+          "title": "Buy 2 Dippers Picks & Get 1",
+          "description": "Perfect crispy side for movie night cravings.",
+          "badge": "Party Pick",
+          "imageUrl": "https://images.unsplash.com/photo-1606755962773-d324e2d53f36?auto=format&fit=crop&w=240&q=80"
+        },
+        {
+          "id": 5,
+          "title": "Weekend Special Pizza Deal",
+          "description": "Double cheese option with free soft drink add-on.",
+          "badge": "Weekend Exclusive",
+          "imageUrl": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=240&q=80"
+        }
+      ]
+    },
+    {
+      "id": "grand-dipper-deals",
+      "title": "Grand Dipper Deals",
+      "items": [
+        {
+          "id": 6,
+          "title": "Buy 2 Grand Dipper For Rs. 450",
+          "description": "Crispy dippers served with special YummyGo sauce.",
+          "badge": "Mega Dipper",
+          "imageUrl": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=240&q=80"
+        },
+        {
+          "id": 7,
+          "title": "Buy 2 Grand Dipper Plus Free Mini Roll",
+          "description": "Add a mini roll for free when you order this combo.",
+          "badge": "Bonus Treat",
+          "imageUrl": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=240&q=80"
+        }
+      ]
+    },
+    {
+      "id": "cyber-savings",
+      "title": "Cyber Savings",
+      "items": [
+        {
+          "id": 8,
+          "title": "Buy 1 Dipper & Get 50% OFF",
+          "description": "Online payment offer for selected dipper items.",
+          "badge": "UPI / Card Offer",
+          "imageUrl": "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=240&q=80"
+        },
+        {
+          "id": 9,
+          "title": "25% OFF On Selected Pizza Deals",
+          "description": "Save instantly on selected pizzas with online orders.",
+          "badge": "Digital Exclusive",
+          "imageUrl": "https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?auto=format&fit=crop&w=240&q=80"
+        }
+      ]
+    }
+  ],
+  "infoBlocks": [
+    {
+      "id": "delivery",
+      "title": "Delivery Information",
+      "lines": [
+        "Monday - Thursday: 10:00 AM - 10:00 PM",
+        "Friday - Saturday: 10:00 AM - 11:00 PM",
+        "Sunday: 11:00 AM - 10:00 PM",
+        "Estimated delivery time: 30-45 minutes"
+      ]
+    },
+    {
+      "id": "contacts",
+      "title": "Contacts Information",
+      "lines": [
+        "For support, call us at +94 77 545 8685",
+        "Email: yummygo@gmail.com",
+        "Address: No.23, Prince Street, Kaduwela",
+        "Track your order from the My Orders page"
+      ]
+    },
+    {
+      "id": "operational",
+      "title": "Operational Times",
+      "lines": [
+        "Live order support: 08:00 AM - 11:00 PM",
+        "Kitchen prep starts: 09:00 AM daily",
+        "Online payments active: 24/7",
+        "Holiday schedule may vary by outlet"
+      ]
+    }
+  ],
+  "reviews": [
+    {
+      "id": 1,
+      "name": "Ashen",
+      "role": "Food Lover",
+      "rating": 5,
+      "comment": "The pizza was packed really well and arrived hot. Fast delivery and great weekend deals."
+    },
+    {
+      "id": 2,
+      "name": "Nuwan",
+      "role": "Regular Customer",
+      "rating": 4,
+      "comment": "Grand dipper combo is my favorite. Prices are fair and the app flow is super easy."
+    },
+    {
+      "id": 3,
+      "name": "Lahiru",
+      "role": "Verified Buyer",
+      "rating": 5,
+      "comment": "Special offers section is awesome. I saved a lot using card promos and online discounts."
+    }
+  ]
+}

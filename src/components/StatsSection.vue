@@ -8,7 +8,7 @@ const stats = [
 </script>
 
 <template>
-  <section class="bg-white px-16 py-12">
+  <section class="bg-white px-16 py-12 dark:bg-gray-950">
     
     <!-- 🔶 Orange Box -->
     <div class="grid grid-cols-4 bg-[#FF8908] rounded-xl px-12 py-6 text-white shadow-sm">

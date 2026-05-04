@@ -34,8 +34,8 @@ const categories = [
 </script>
 
 <template>
-  <section class="bg-white px-16 py-10">
-    <h2 class="mb-8 text-3xl font-extrabold text-gray-950">
+  <section class="bg-white px-16 py-10 dark:bg-gray-950">
+    <h2 class="mb-8 text-3xl font-extrabold text-gray-950 dark:text-white">
       YUMMY GO Popular Categories 🤩
     </h2>
 
@@ -43,7 +43,7 @@ const categories = [
       <div
         v-for="category in categories"
         :key="category.name"
-        class="overflow-hidden rounded-lg border border-gray-200 bg-[#F4F4F4] transition hover:shadow-md"
+        class="overflow-hidden rounded-lg border border-gray-200 bg-[#F4F4F4] transition hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
       >
         <img
           :src="category.image"
@@ -52,7 +52,7 @@ const categories = [
         />
 
         <div class="px-4 py-3">
-          <h3 class="text-sm font-bold text-gray-950">
+          <h3 class="text-sm font-bold text-gray-950 dark:text-white">
             {{ category.name }}
           </h3>
 
