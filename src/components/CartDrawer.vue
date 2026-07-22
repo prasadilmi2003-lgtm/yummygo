@@ -17,14 +17,39 @@ const emit = defineEmits<{
 const deliveryFee = 100
 const discount = computed(() => 0)
 const couponCode = ref('')
+const fulfillmentType = ref<'delivery' | 'collection'>('delivery')
+
+const toNumber = (value: unknown): number => {
+  if (typeof value === 'number') return Number.isFinite(value) ? value : 0
+  if (typeof value === 'string') {
+    const normalized = value.replace(/,/g, '')
+    const numericPart = normalized.match(/-?\d+(?:\.\d+)?/g)?.[0]
+    if (!numericPart) return 0
+    const parsed = Number(numericPart)
+    return Number.isFinite(parsed) ? parsed : 0
+  }
+  return 0
+}
+
+const itemLineTotal = (item: CartItem): number => {
+  const unitPrice = toNumber(item.price)
+  const qty = Math.max(1, Math.trunc(toNumber(item.quantity)))
+  return unitPrice * qty
+}
 
 const subtotal = computed(() => {
-  return props.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  return props.cartItems.reduce((sum, item) => sum + itemLineTotal(item), 0)
 })
 
 const total = computed(() => {
-  return subtotal.value + deliveryFee - discount.value
+  const fee = fulfillmentType.value === 'delivery' ? deliveryFee : 0
+  return subtotal.value + fee - discount.value
 })
+
+const formatAmount = (value: number): string => {
+  const rounded = Math.round((value + Number.EPSILON) * 100) / 100
+  return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(2)
+}
 
 const updateItemQuantity = (item: CartItem, diff: number) => {
   const nextQty = Math.max(1, item.quantity + diff)
@@ -50,10 +75,10 @@ const updateItemQuantity = (item: CartItem, diff: number) => {
           </div>
           <button
             type="button"
-            class="rounded-full bg-white/20 px-2.5 py-1 text-sm font-semibold transition hover:bg-white/30"
+            class="h-8 w-8 rounded-full bg-white/20 text-sm font-semibold transition hover:bg-white/30"
             @click="emit('close')"
           >
-            X
+            x
           </button>
         </div>
 
@@ -79,7 +104,7 @@ const updateItemQuantity = (item: CartItem, diff: number) => {
                 <div class="min-w-0 flex-1">
                   <div class="flex items-start justify-between gap-2">
                     <p class="truncate text-sm font-semibold">{{ item.name }}</p>
-                    <p class="text-sm font-bold text-orange-500">Rs. {{ item.price * item.quantity }}</p>
+                    <p class="text-sm font-bold text-orange-500">Rs. {{ formatAmount(itemLineTotal(item)) }}</p>
                   </div>
                   <p class="mt-1 line-clamp-2 text-xs text-gray-500 dark:text-gray-400">{{ item.note }}</p>
                   <div class="mt-2 flex items-center justify-between">
@@ -119,19 +144,21 @@ const updateItemQuantity = (item: CartItem, diff: number) => {
             <div class="rounded-2xl border border-gray-200 p-3 text-sm dark:border-gray-700">
               <div class="flex items-center justify-between py-1">
                 <span class="text-gray-600 dark:text-gray-300">Sub Total</span>
-                <span class="font-semibold">Rs. {{ subtotal }}</span>
+                <span class="font-semibold">Rs. {{ formatAmount(subtotal) }}</span>
               </div>
               <div class="flex items-center justify-between py-1">
                 <span class="text-gray-600 dark:text-gray-300">Discounts</span>
-                <span class="font-semibold">Rs. {{ discount }}</span>
+                <span class="font-semibold">Rs. {{ formatAmount(discount) }}</span>
               </div>
               <div class="flex items-center justify-between py-1">
                 <span class="text-gray-600 dark:text-gray-300">Delivery Fee</span>
-                <span class="font-semibold">Rs. {{ deliveryFee }}</span>
+                <span class="font-semibold">
+                  Rs. {{ fulfillmentType === 'delivery' ? formatAmount(deliveryFee) : '0' }}
+                </span>
               </div>
               <div class="mt-2 flex items-center justify-between border-t border-gray-200 pt-2 text-base font-bold dark:border-gray-700">
                 <span>Total to Pay</span>
-                <span class="text-orange-500">Rs. {{ total }}</span>
+                <span class="text-orange-500">Rs. {{ formatAmount(total) }}</span>
               </div>
             </div>
 
@@ -156,13 +183,25 @@ const updateItemQuantity = (item: CartItem, diff: number) => {
             <div class="grid grid-cols-2 gap-2">
               <button
                 type="button"
-                class="rounded-2xl border border-orange-200 bg-orange-50 px-3 py-3 text-sm font-semibold text-orange-700 transition hover:bg-orange-100 dark:border-orange-900/40 dark:bg-orange-950/30 dark:text-orange-300"
+                class="rounded-2xl border px-3 py-3 text-sm font-semibold transition"
+                :class="
+                  fulfillmentType === 'delivery'
+                    ? 'border-orange-200 bg-orange-50 text-orange-700 hover:bg-orange-100 dark:border-orange-900/40 dark:bg-orange-950/30 dark:text-orange-300'
+                    : 'border-gray-200 bg-gray-50 text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200'
+                "
+                @click="fulfillmentType = 'delivery'"
               >
                 Delivery
               </button>
               <button
                 type="button"
-                class="rounded-2xl border border-gray-200 bg-gray-50 px-3 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+                class="rounded-2xl border px-3 py-3 text-sm font-semibold transition"
+                :class="
+                  fulfillmentType === 'collection'
+                    ? 'border-orange-200 bg-orange-50 text-orange-700 hover:bg-orange-100 dark:border-orange-900/40 dark:bg-orange-950/30 dark:text-orange-300'
+                    : 'border-gray-200 bg-gray-50 text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200'
+                "
+                @click="fulfillmentType = 'collection'"
               >
                 Collection
               </button>

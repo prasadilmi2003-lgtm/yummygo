@@ -29,14 +29,7 @@ const toggleDarkMode = () => {
     <!-- Top Bar -->
     <div class="border-b border-gray-200 px-4 py-2 dark:border-gray-800">
       <div class="mx-auto flex w-full max-w-7xl items-center justify-between gap-3">
-        <div class="flex items-center gap-2 text-xs font-medium text-gray-700 dark:text-gray-200">
-          <span class="text-[10px]">📍</span>
-          <span class="hidden sm:inline">No.23, Prince Street, Kaduwela.</span>
-          <span class="sm:hidden">Kaduwela</span>
-          <button type="button" class="text-[11px] text-orange-500 hover:underline">
-            Change Location
-          </button>
-        </div>
+        <div></div>
 
         <div class="flex items-center gap-3">
           <button

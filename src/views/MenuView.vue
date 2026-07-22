@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import ProductModal from '../components/ProductModal.vue'
 import { productDetailsById, type ProductDetailFields } from '../data/productDetails'
 import { useCart } from '../composables/useCart'
 import type { CartProductLike } from '../types/cart'
+import { useRoute, useRouter } from 'vue-router'
 
 type MenuOffer = ProductDetailFields & {
   id: number
@@ -42,15 +43,37 @@ const offers = ref<MenuOffer[]>([])
 const isLoading = ref(true)
 const selectedProduct = ref<MenuOffer | null>(null)
 const { addToCart, openCart } = useCart()
+const route = useRoute()
+const router = useRouter()
+const searchTerm = ref('')
 
 const assignCategory = (id: number) => {
   const categories = ['Pizza', 'Burgers', 'Veg & Healthy', 'Seafood', 'Drinks']
   return categories[id % categories.length]
 }
 
+const normalize = (value: string): string => value.trim().toLowerCase()
+
 const filteredOffers = computed(() => {
-  if (selectedTab.value === 'All') return offers.value
-  return offers.value.filter((offer) => offer.category === selectedTab.value)
+  const normalizedSearch = normalize(searchTerm.value)
+
+  return offers.value.filter((offer) => {
+    const categoryMatch = selectedTab.value === 'All' || offer.category === selectedTab.value
+    if (!categoryMatch) return false
+    if (!normalizedSearch) return true
+
+    const searchableValues = [
+      offer.title,
+      offer.description,
+      offer.category,
+      offer.foodType,
+      offer.spicyLevel,
+      offer.tags.join(' '),
+      offer.ingredients.join(' '),
+    ]
+
+    return searchableValues.some((value) => normalize(value).includes(normalizedSearch))
+  })
 })
 
 const groupedOffers = computed(() => {
@@ -100,6 +123,27 @@ const handleAddToBasket = (payload: { product: CartProductLike; quantity: number
   addToCart(payload.product, payload.quantity)
   openCart()
 }
+
+const syncSearchFromRoute = () => {
+  const q = route.query.q
+  searchTerm.value = typeof q === 'string' ? q.trim() : ''
+}
+
+const applySearch = () => {
+  const query = searchTerm.value.trim()
+  router.replace({
+    query: query ? { ...route.query, q: query } : { ...route.query, q: undefined },
+  })
+}
+
+watch(
+  () => route.query.q,
+  () => {
+    syncSearchFromRoute()
+  },
+)
+
+syncSearchFromRoute()
 </script>
 
 <template>
@@ -115,6 +159,21 @@ const handleAddToBasket = (payload: { product: CartProductLike; quantity: number
       <h1 class="text-xl font-extrabold tracking-wide text-gray-900 dark:text-white md:text-2xl">
         BROWSE MENU
       </h1>
+
+      <form class="mt-4 flex w-full max-w-md items-center gap-2" @submit.prevent="applySearch">
+        <input
+          v-model="searchTerm"
+          type="text"
+          placeholder="Search food items..."
+          class="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none ring-orange-400 transition focus:ring dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+        />
+        <button
+          type="submit"
+          class="rounded-xl bg-[#ff8908] px-4 py-2 text-sm font-semibold text-white transition hover:bg-orange-600"
+        >
+          Search
+        </button>
+      </form>
 
       <div class="mt-4 flex flex-wrap items-center gap-2 border-b border-gray-300/80 pb-4 dark:border-gray-700">
         <button
@@ -179,7 +238,7 @@ const handleAddToBasket = (payload: { product: CartProductLike; quantity: number
           v-if="!Object.keys(groupedOffers).length"
           class="py-8 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
         >
-          No menu cards found for this category.
+          No food items found. Try another search.
         </p>
       </div>
     </div>

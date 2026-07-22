@@ -1,62 +1,75 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import girlBurger from '../assets/girl-burger.png'
-import boyNoodles from '../assets/boy-noodles.png'
+
+const router = useRouter()
+const searchTerm = ref('')
+
+const handleSearch = () => {
+  const query = searchTerm.value.trim()
+  router.push({
+    path: '/browse-menu',
+    query: query ? { q: query } : {},
+  })
+}
 </script>
 
 <template>
-  <section class="bg-white px-16 py-12 dark:bg-gray-950">
-    
-    <!-- 🔹 Inner Card -->
-    <div class="relative overflow-hidden rounded-2xl bg-[#EEEEEE] border border-gray-200 shadow-sm px-12 py-14 min-h-[420px] dark:bg-gray-900 dark:border-gray-800">
-      
-      <!-- LEFT CONTENT -->
-      <div class="relative z-20 max-w-xl">
-        
-        <p class="text-sm text-gray-500 mb-4 dark:text-gray-300">
+  <section class="bg-white px-4 py-8 md:px-8 lg:px-10 dark:bg-gray-950">
+    <div
+      class="relative mx-auto min-h-[420px] w-full max-w-[1250px] overflow-hidden rounded-2xl border border-[#14224a] bg-[#030d34] px-6 py-10 md:px-11 md:py-12"
+    >
+      <div class="absolute right-0 top-0 h-full w-[45%] rounded-l-[140px] bg-[#ff9000]"></div>
+
+      <img
+        :src="girlBurger"
+        alt="Hero overlay"
+        class="absolute bottom-0 left-[34%] z-10 hidden h-[90%] -translate-x-1/2 opacity-20 md:block"
+      />
+
+      <div class="relative z-30 max-w-[520px]">
+        <p class="mb-5 text-sm text-white/75">
           Order Restaurant food, takeaway and groceries.
         </p>
 
-        <h1 class="text-6xl font-extrabold leading-tight text-gray-900 dark:text-white">
-          Delicious Food,
+        <h1 class="text-[40px] font-extrabold leading-[1.1] text-white md:text-[62px]">
+          Delicious Food
           <br />
-          <span class="text-[#F97316]">Delivered Fast......</span>
+          <span class="text-[#ff9000]">Delivered Fast......</span>
         </h1>
 
-        <!-- 🔍 Search Bar -->
-        <div class="mt-8 flex items-center bg-white rounded-full p-2 w-full max-w-md shadow-sm dark:bg-gray-950">
-          
+        <form
+          class="mt-8 flex h-[56px] w-full max-w-[430px] items-center rounded-full bg-white p-1.5"
+          @submit.prevent="handleSearch"
+        >
           <input
+            v-model="searchTerm"
             type="text"
             placeholder="Search YUMMY GO"
-            class="flex-1 bg-transparent outline-none px-4 text-sm text-gray-900 placeholder:text-gray-400 dark:text-gray-100 dark:placeholder:text-gray-500"
+            class="flex-1 bg-transparent px-5 text-sm text-gray-900 outline-none placeholder:text-gray-400"
           />
 
-          <!-- 🔥 UPDATED BUTTON -->
-          <button class="bg-[#F97316] hover:bg-[#fb923c] active:scale-95 text-white px-8 py-3 rounded-full font-semibold transition duration-200">
+          <button
+            type="submit"
+            class="h-full rounded-full bg-[#ff9000] px-9 text-sm font-semibold text-white transition hover:bg-[#f39c12]"
+          >
             Search
           </button>
-
-        </div>
+        </form>
       </div>
 
-      <!-- 🔶 ORANGE SHAPE -->
-      <div class="absolute right-0 top-10 h-[420px] w-[420px] bg-[#F97316] rounded-l-full"></div>
-
-      <!-- 🖼️ GIRL IMAGE -->
       <img
         :src="girlBurger"
-        alt="Girl holding burger"
-        class="absolute bottom-0 right-[300px] z-20 h-[420px] object-contain"
+        alt="Main hero person"
+        class="absolute bottom-0 right-[16%] z-30 hidden h-[96%] object-contain md:block"
       />
 
-      <!-- 🖼️ BOY IMAGE -->
       <img
-        :src="boyNoodles"
-        alt="Boy eating noodles"
-        class="absolute bottom-10 right-20 z-10 h-[300px] rounded-xl object-cover shadow-md"
+        :src="girlBurger"
+        alt="Right hero person"
+        class="absolute bottom-0 right-2 z-20 hidden h-[74%] object-contain md:block"
       />
-
     </div>
-
   </section>
 </template>
