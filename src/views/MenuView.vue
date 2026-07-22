@@ -129,10 +129,26 @@ const syncSearchFromRoute = () => {
   searchTerm.value = typeof q === 'string' ? q.trim() : ''
 }
 
+const syncCategoryFromRoute = () => {
+  const category = route.query.category
+  selectedTab.value =
+    typeof category === 'string' && tabs.includes(category) ? category : 'All'
+}
+
 const applySearch = () => {
   const query = searchTerm.value.trim()
   router.replace({
     query: query ? { ...route.query, q: query } : { ...route.query, q: undefined },
+  })
+}
+
+const selectTab = (tab: string) => {
+  selectedTab.value = tab
+  router.replace({
+    query:
+      tab === 'All'
+        ? { ...route.query, category: undefined }
+        : { ...route.query, category: tab },
   })
 }
 
@@ -143,7 +159,15 @@ watch(
   },
 )
 
+watch(
+  () => route.query.category,
+  () => {
+    syncCategoryFromRoute()
+  },
+)
+
 syncSearchFromRoute()
+syncCategoryFromRoute()
 </script>
 
 <template>
@@ -182,7 +206,7 @@ syncSearchFromRoute()
           type="button"
           class="rounded-full px-4 py-1.5 text-sm font-semibold shadow-sm transition"
           :class="selectedTab === tab ? 'bg-[#ff8908] text-white' : 'bg-gray-100 text-gray-700 hover:bg-orange-100 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'"
-          @click="selectedTab = tab"
+          @click="selectTab(tab)"
         >
           {{ tab }}
         </button>

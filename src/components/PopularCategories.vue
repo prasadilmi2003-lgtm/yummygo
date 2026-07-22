@@ -1,66 +1,45 @@
 <script setup lang="ts">
-const categories = [
-  {
-    name: 'Burgers & Fast food',
-    count: '21 Restaurants',
-    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500'
-  },
-  {
-    name: 'Salads',
-    count: '32 Restaurants',
-    image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500'
-  },
-  {
-    name: 'Pasta & Casuals',
-    count: '4 Restaurants',
-    image: 'https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=500'
-  },
-  {
-    name: 'Pizza',
-    count: '32 Restaurants',
-    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500'
-  },
-  {
-    name: 'Breakfast',
-    count: '4 Restaurants',
-    image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=500'
-  },
-  {
-    name: 'Soups',
-    count: '32 Restaurants',
-    image: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500'
-  }
-]
+import { popularFoodItems } from '../data/popularFoodItems'
+import { useCart } from '../composables/useCart'
+
+const { addToCart, openCart } = useCart()
+
+const buyItem = (item: (typeof popularFoodItems)[number]) => {
+  addToCart(item, 1)
+  openCart()
+}
 </script>
 
 <template>
   <section class="bg-white px-16 py-10 dark:bg-gray-950">
     <h2 class="mb-8 text-3xl font-extrabold text-gray-950 dark:text-white">
-      YUMMY GO Popular Categories 🤩
+      YUMMY GO Popular Food Items 
     </h2>
 
     <div class="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-6">
-      <div
-        v-for="category in categories"
-        :key="category.name"
-        class="overflow-hidden rounded-lg border border-gray-200 bg-[#F4F4F4] transition hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
+      <button
+        v-for="item in popularFoodItems"
+        :key="item.id"
+        type="button"
+        class="group overflow-hidden rounded-lg border border-gray-200 bg-[#F4F4F4] text-left transition hover:-translate-y-0.5 hover:border-orange-300 hover:shadow-md dark:border-gray-800 dark:bg-gray-900 dark:hover:border-orange-500"
+        @click="buyItem(item)"
       >
         <img
-          :src="category.image"
-          :alt="category.name"
-          class="h-36 w-full object-cover"
+          :src="item.imageUrl"
+          :alt="item.title"
+          class="h-36 w-full object-cover transition group-hover:scale-105"
         />
 
         <div class="px-4 py-3">
-          <h3 class="text-sm font-bold text-gray-950 dark:text-white">
-            {{ category.name }}
+          <h3 class="text-sm font-bold text-gray-950 transition group-hover:text-orange-500 dark:text-white">
+            {{ item.title }}
           </h3>
 
-          <p class="text-xs text-orange-500">
-            {{ category.count }}
+          <p class="mt-1 text-xs font-semibold text-orange-500">
+            {{ item.badge }}
           </p>
         </div>
-      </div>
+      </button>
     </div>
   </section>
 </template>

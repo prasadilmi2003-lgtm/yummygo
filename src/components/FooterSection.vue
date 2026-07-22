@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import logo from '../assets/logo.png'
+import { RouterLink } from 'vue-router'
+
+import logoLight from '../assets/logo.png'
+import logoDark from '../assets/logo-dark.png'
 </script>
 
 <template>
@@ -8,7 +11,20 @@ import logo from '../assets/logo.png'
       
       <!-- Logo + Info -->
       <div>
-        <img :src="logo" alt="Yummy Go Logo" class="h-16 object-contain mb-4" />
+        <RouterLink to="/" class="mb-4 inline-flex items-center">
+          <span class="flex h-10 items-center overflow-visible md:h-12">
+            <img
+              :src="logoLight"
+              alt="YummyGo Logo"
+              class="h-10 w-auto origin-left scale-[4.25] object-contain md:h-12 md:scale-[5.5] dark:hidden"
+            />
+            <img
+              :src="logoDark"
+              alt="YummyGo Logo"
+              class="hidden h-10 w-auto origin-left scale-[4.25] object-contain md:h-12 md:scale-[5.5] dark:block"
+            />
+          </span>
+        </RouterLink>
 
         <div class="flex gap-4 text-sm text-gray-700 dark:text-gray-300">
           <p>yummygo@gmail.com</p>
@@ -42,12 +58,7 @@ import logo from '../assets/logo.png'
           we wont spam, read our <u>email policy</u>
         </p>
 
-        <div class="mt-5 flex gap-4 text-2xl">
-          <span>📘</span>
-          <span>📷</span>
-          <span>🎵</span>
-          <span>👻</span>
-        </div>
+        
       </div>
 
       <!-- Legal Pages -->

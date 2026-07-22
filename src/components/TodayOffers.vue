@@ -1,19 +1,19 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 import bakeryOffer from '../assets/offers/bakery-offer.png'
 import deliveryOffer from '../assets/offers/delivery-offer.png'
+import { foodOfferCampaigns } from '../data/foodOffers'
 
-const offers = [
-  {
-    tag: '20% OFF on Bakery Items',
-    title: 'Enjoy delicious Bakery Items\nIn a discounted price',
-    image: bakeryOffer,
-  },
-  {
-    tag: 'Limited Time Deal',
-    title: 'Order your favourite Beverages\nwith zero delivery fee',
-    image: deliveryOffer,
-  },
-]
+const offerImages: Record<string, string> = {
+  'burger-pizza-deal': bakeryOffer,
+  'drinks-deal': deliveryOffer,
+}
+
+const offers = foodOfferCampaigns.map((campaign) => ({
+  ...campaign,
+  image: offerImages[campaign.id] || bakeryOffer,
+  link: { path: '/today-offers', query: { offer: campaign.id } },
+}))
 </script>
 
 <template>
@@ -23,15 +23,16 @@ const offers = [
     </h2>
 
     <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-      <div
+      <RouterLink
         v-for="offer in offers"
-        :key="offer.tag"
-        class="relative h-[360px] overflow-hidden rounded-xl shadow-md"
+        :key="offer.id"
+        :to="offer.link"
+        class="group relative block h-[360px] overflow-hidden rounded-xl shadow-md transition hover:-translate-y-0.5 hover:shadow-lg"
       >
         <img
           :src="offer.image"
           :alt="offer.tag"
-          class="h-full w-full object-cover"
+          class="h-full w-full object-cover transition group-hover:scale-105"
         />
 
         <div class="absolute inset-0 bg-black/45"></div>
@@ -45,11 +46,11 @@ const offers = [
             {{ offer.title }}
           </h3>
 
-          <button class="mt-5 rounded-full bg-[#FF8908] px-10 py-3 text-sm font-semibold text-white hover:bg-orange-600">
+          <span class="mt-5 inline-block rounded-full bg-[#FF8908] px-10 py-3 text-sm font-semibold text-white transition group-hover:bg-orange-600">
             Order Now
-          </button>
+          </span>
         </div>
-      </div>
+      </RouterLink>
     </div>
   </section>
 </template>
