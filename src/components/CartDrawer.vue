@@ -70,7 +70,6 @@ const updateItemQuantity = (item: CartItem, diff: number) => {
       >
         <div class="flex items-center justify-between bg-green-600 px-5 py-4 text-white">
           <div class="flex items-center gap-3">
-            <span class="text-xl">🧺</span>
             <h2 class="text-lg font-bold">My Basket</h2>
           </div>
           <button
