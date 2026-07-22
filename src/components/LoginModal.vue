@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
-import logo from '../assets/logo.png'
+import logoLight from '../assets/logo.png'
+import logoDark from '../assets/logo-dark.png'
 import loginImage from '../assets/login.jpg'
 
 const props = defineProps<{ open: boolean }>()
@@ -81,7 +82,20 @@ onUnmounted(() => {
 
         <!-- Right: form -->
         <div class="flex flex-col overflow-y-auto bg-white px-8 pb-10 pt-8 dark:bg-gray-900 md:px-10 md:pt-10">
-          <img :src="logo" alt="YUMMY GO" class="mb-6 h-9 w-auto object-contain md:h-10" />
+          <div class="mb-6 flex justify-center">
+            <span class="flex h-12 items-center overflow-visible md:h-14">
+              <img
+                :src="logoLight"
+                alt="YUMMY GO"
+                class="h-12 w-auto origin-center scale-[2.25] object-contain md:h-14 md:scale-[2.75] dark:hidden"
+              />
+              <img
+                :src="logoDark"
+                alt="YUMMY GO"
+                class="hidden h-12 w-auto origin-center scale-[2.25] object-contain md:h-14 md:scale-[2.75] dark:block"
+              />
+            </span>
+          </div>
 
           <h2 id="login-modal-title" class="text-center text-xl font-extrabold text-gray-900 dark:text-white md:text-2xl">
             {{ title }}
