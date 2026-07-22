@@ -43,10 +43,7 @@ const toggleDarkMode = () => {
     <!-- Top Bar -->
     <div class="border-b border-gray-200 px-4 py-2 dark:border-gray-800">
       <div class="mx-auto flex w-full max-w-7xl items-center justify-between gap-3">
-<<<<<<< HEAD
-=======
 
->>>>>>> 9048378cfb666f1758c525550a7028dacb458320
         <div></div>
 
         <div class="flex items-center gap-3">
@@ -86,14 +83,14 @@ const toggleDarkMode = () => {
     <nav class="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-4 md:px-6">
 
       <!-- Logo -->
-      <RouterLink to="/" class="flex items-center">
-
-        <img
-          :src="darkMode ? logoDark : logoLight"
-          alt="YummyGo Logo"
-          class="h-10 w-auto object-contain md:h-12"
-        />
-
+      <RouterLink to="/" class="flex shrink-0 items-center">
+        <span class="flex h-10 items-center overflow-visible md:h-12">
+          <img
+            :src="darkMode ? logoDark : logoLight"
+            alt="YummyGo Logo"
+            class="h-10 w-auto origin-left scale-[4.25] object-contain md:h-12 md:scale-[5.5]"
+          />
+        </span>
       </RouterLink>
 
       <!-- Desktop Menu -->
